@@ -25,11 +25,11 @@ namespace Grammophone.DataAccess.Tests.Cases.EntityFrameworkCore
 			Directory.CreateDirectory(dataDirectory);
 			AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
 
-			var options = new DbContextOptionsBuilder<EFCoreTestDomainContainer>()
+			var options = new DbContextOptionsBuilder<EFCoreMusicDomainContainer>()
 				.UseSqlServer(configuration.GetConnectionString("default"))
 				.Options;
 
-			return new EFCoreTestDomainContainerAdapter(new EFCoreTestDomainContainer(options));
+			return new EFCoreMusicDomainContainerAdapter(new EFCoreMusicDomainContainer(options));
 		}
 
 		#endregion
