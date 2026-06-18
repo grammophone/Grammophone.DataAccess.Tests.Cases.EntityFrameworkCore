@@ -13,7 +13,7 @@ namespace Grammophone.DataAccess.Tests.Cases.EntityFrameworkCore
 		#region Protected methods
 
 		/// <inheritdoc/>
-		protected override ITestDomainContainer CreateDomainContainer()
+		protected override IMusicDomainContainer CreateDomainContainer()
 		{
 			return EFCoreTestFactory.CreateDomainContainer();
 		}

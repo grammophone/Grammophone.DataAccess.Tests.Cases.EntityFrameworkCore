@@ -14,7 +14,7 @@ namespace Grammophone.DataAccess.Tests.Cases.EntityFrameworkCore
 		/// <summary>
 		/// Create a test domain container.
 		/// </summary>
-		public static ITestDomainContainer CreateDomainContainer()
+		public static IMusicDomainContainer CreateDomainContainer()
 		{
 			var options = new DbContextOptionsBuilder<EFCoreTestDomainContainer>()
 				.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GrammophoneDataAccess_EFCore_Test;Trusted_Connection=True;TrustServerCertificate=True")
