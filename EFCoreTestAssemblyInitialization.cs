@@ -19,11 +19,13 @@ namespace Grammophone.DataAccess.Tests.Cases.EntityFrameworkCore
 		[AssemblyInitialize]
 		public static void Initialize(TestContext context)
 		{
+			EFCoreTestFactory.DropDatabase();
+			EFCoreTestFactory.CreateDatabase();
+
 			using (var domainContainer = EFCoreTestFactory.CreateDomainContainer())
 			{
 				var underlyingContext = (EFCoreMusicDomainContainer)domainContainer.UnderlyingContext;
 
-				underlyingContext.Database.EnsureDeleted();
 				underlyingContext.Database.EnsureCreated();
 
 				MusicTestDataSeeder.Seed(domainContainer);
