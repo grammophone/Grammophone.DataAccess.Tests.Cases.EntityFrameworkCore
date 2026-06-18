@@ -1,5 +1,8 @@
+using System;
+using System.IO;
 using Grammophone.DataAccess.Tests.Domain;
 using Grammophone.DataAccess.Tests.Domain.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace Grammophone.DataAccess.Tests.Cases.EntityFrameworkCore
@@ -16,11 +19,38 @@ namespace Grammophone.DataAccess.Tests.Cases.EntityFrameworkCore
 		/// </summary>
 		public static IMusicDomainContainer CreateDomainContainer()
 		{
+			var configuration = CreateConfiguration();
+			var dataDirectory = GetDataDirectory(configuration);
+
+			Directory.CreateDirectory(dataDirectory);
+			AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
+
 			var options = new DbContextOptionsBuilder<EFCoreTestDomainContainer>()
-				.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GrammophoneDataAccess_EFCore_Test;Trusted_Connection=True;TrustServerCertificate=True")
+				.UseSqlServer(configuration.GetConnectionString("default"))
 				.Options;
 
 			return new EFCoreTestDomainContainerAdapter(new EFCoreTestDomainContainer(options));
+		}
+
+		#endregion
+
+		#region Private methods
+
+		private static IConfigurationRoot CreateConfiguration()
+		{
+			return new ConfigurationBuilder()
+				.SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+				.AddJsonFile("appsettings.json", optional: false)
+				.Build();
+		}
+
+		private static string GetDataDirectory(IConfiguration configuration)
+		{
+			var path = Path.Combine(
+				AppDomain.CurrentDomain.BaseDirectory,
+				configuration["DataDirectory"]);
+
+			return Path.GetFullPath(path);
 		}
 
 		#endregion
