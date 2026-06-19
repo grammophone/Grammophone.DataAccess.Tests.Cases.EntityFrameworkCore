@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Grammophone.DataAccess.EntityFrameworkCore;
 using Grammophone.DataAccess.Tests.Domain;
 using Grammophone.DataAccess.Tests.Domain.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
@@ -104,7 +105,12 @@ namespace Grammophone.DataAccess.Tests.Cases.EntityFrameworkCore
 				.UseSqlServer(configuration.GetConnectionString("default"))
 				.Options;
 
-			return new EFCoreMusicDomainContainerAdapter(new EFCoreMusicDomainContainer(options));
+			var innerContainer = new EFCoreMusicDomainContainer(options)
+			{
+				ExceptionTransformer = new MicrosoftSqlServerExceptionTransformer()
+			};
+
+			return new EFCoreMusicDomainContainerAdapter(innerContainer);
 		}
 
 		#endregion
