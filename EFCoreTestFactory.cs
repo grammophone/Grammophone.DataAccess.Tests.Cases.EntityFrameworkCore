@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using Grammophone.DataAccess.EntityFrameworkCore;
 using Grammophone.DataAccess.Tests.Domain;

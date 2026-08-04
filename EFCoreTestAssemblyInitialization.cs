@@ -1,4 +1,4 @@
-using Grammophone.DataAccess.Tests.Cases;
+﻿using Grammophone.DataAccess.Tests.Cases;
 using Grammophone.DataAccess.Tests.Domain.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
